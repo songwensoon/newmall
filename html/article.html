@@ -1,0 +1,96 @@
+{set:$page = isset($_GET['page'])?intval($_GET['page']):1;}
+{set:$catId = IFilter::act(IReq::get('id'),'int');$catRow = array();}
+{query:name=article_category where=id eq $catId item=$catRow}{/query}
+
+{if:$catRow}
+{query:name=article where=visibility eq 1 and category_id eq $catRow[id] order=id desc id=$article page=$page items=$list}{/query}
+{set:$seo_data=array();$site_config=new Config('site_config');}
+{set:$seo_data['description']=$seo_data['keywords']=$seo_data['title']=$catRow['name']."_".$site_config->name}
+{set:seo::set($seo_data);}
+{else:}
+{query:name=article where=visibility eq 1 order=id desc id=$article page=$page items=$list}{/query}
+{/if}
+<div class="w">
+    <div class="detailnav">
+        <strong><a href="/">首页</a></strong>
+        <span> >  {if:$catRow}{$catRow['name']}{else:}最新资讯{/if}</span>
+    </div>
+</div>
+<div class="w help">
+    <div class="left">
+    	<div class="help_side">
+           {query:name=article_category limit=10 where=issys eq 0 order=sort asc}
+           	<div class="current">
+                <h4><a href="{url:/site/article/id/$item[id]}">{$item['name']}</a><b></b></h4>
+                <ul>  
+                   
+                </ul>
+            </div>
+            {/query}
+        </div>
+        <script type="text/javascript">
+		$(".help_side h4").bind("click",function(){
+			var element=$(this).parent();
+			if(element.hasClass("current"))
+				element.removeClass("current");
+			else
+				element.addClass("current");
+		});
+		</script>
+    </div>		
+    
+    <div class="right">
+		<div class="new_neiz">
+            <ul>
+				{foreach:items=$list}
+                 <li>
+					   {if:$item['img']}
+                	   <div class="new_neiliz"><a href="{url:/site/article_detail/id/$item[id]}" title="{$item['title']}" target="_blank"><img height="123px;" style=" max-width:183px;" src="{webroot:}{echo:$item['img']}"></a></div>
+					   {else:}
+					   <div class="new_neiliz"><a href="{url:/site/article_detail/id/$item[id]}" title="{$item['title']}" target="_blank"><img height="123px;" style=" max-width:183px;" src="/views/mall/skin/default/images/mall/article.jpg"></a></div>
+					   {/if}
+						<div class="new_neiliz0">
+                        <div class="new_neibt"><a href="{url:/site/article_detail/id/$item[id]}" title="{$item['title']}" target="_blank"> {$item['title']}</a></div>
+                        <div class="new_neisj">{$item['time']}</div>
+                        <div class="new_neinr"><p>{echo:Article::get_word($item['content'],500)}</p></div>
+                    </div>
+                    <div class="clear"></div>
+					</li>
+				{/foreach}
+              </ul>
+			  
+			<div class="new_ym">
+				{$article->getPageBar()}    
+			</div>
+        </div>
+
+    </div>
+</div>
+ <div class="clear"></div>
+
+<style>
+.menu{ margin-bottom:0px !important;}
+.new_bg{background:#F2F2F2; width:100%; padding:15px 0px;}
+.new_nei{margin:0 auto; width:1200px; background:#fff;}
+.new_nei h2{background:#fbfbfb; height:35px; line-height:35px; border-bottom:1px solid #f5f4f4; font-family:微软雅黑; font-size:16px; font-weight:normal; padding-left:20px;}
+.new_neiz{float:left; width:800px; border-right:1px solid #f5f4f4;margin-top: -42px;}
+.new_neiz ul{padding:15px;}
+.new_neiz li{padding:25px 15px; border-bottom:1px dashed #DDDDDD;}
+.new_neiliz{float:left; width:183px; height:123px; border:1px solid #f0f0f0;}
+.new_neiliz0{float:left; width:531px; padding-left:20px;}
+.new_neibt{font-family:微软雅黑; font-size:16px;}
+.new_neisj{color:#999999; padding-top:10px;}
+.new_neinr{color:#6C6C6C; padding-top:5px;}
+.new_neinr p{line-height:24px;}
+.new_ym{padding-bottom:30px; padding-left:30px;}
+.clear{clear:both;}
+.new_neiy{float:right; width:250px; margin:0 auto; padding-top:20px;}
+.new_neiy b{ font-size:16px; padding:20px 15px 0px; font-family:微软雅黑; color:#333;}
+.new_neiy_a{width:100px;}
+.new_neiy_a img{width:100px; height:75px;}
+.new_neiy ul{list-style:none; padding:0px 15px;}
+.new_neiy li{margin: 15px 0 0;}
+.new_banner{ margin-top:30px; border-top:1px solid #F5F4F4;}
+.new_banner img{width:217px; padding:15px 15px 0;}
+.footer{margin-top:0px !important;}
+</style>
