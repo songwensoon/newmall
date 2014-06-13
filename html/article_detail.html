@@ -1,0 +1,46 @@
+{set:
+	$seo_data=array();
+	$site_config=new Config('site_config');
+	$seo_data['title']=$this->articleRow['title'];
+	$seo_data['title'].="_".$site_config->name;
+	$seo_data['keywords']=$this->articleRow['keywords'];
+	$seo_data['description']=$this->articleRow['description'];
+	seo::set($seo_data);
+}
+<div class="w help">
+    <div class="left">
+    	<div class="help_side">
+           {query:name=article_category limit=10 where=issys eq 0 order=sort asc}
+           	<div class="current">
+                <h4><a href="{url:/site/article/id/$item[id]}">{$item['name']}</a><b></b></h4>
+                <ul>  
+                   
+                </ul>
+            </div>
+            {/query}
+        </div>
+        <script type="text/javascript">
+		$(".help_side h4").bind("click",function(){
+			var element=$(this).parent();
+			if(element.hasClass("current"))
+				element.removeClass("current");
+			else
+				element.addClass("current");
+		});
+		</script>
+    </div>		
+    
+    <div class="right">
+		<div class="right">
+        <h3 class="help_tit" style="text-align:center;">{$this->articleRow['title']}</h3>
+		<div class="partake_bar clearfix" style="text-align:center;">
+			<span class="f_r"></span>发布日期：{$this->articleRow['create_time']}
+		</div>
+        <div class="help_box">
+            {$this->articleRow['content']}
+        </div>
+		</div>
+
+    </div>
+</div>
+<div class="clear"></div>
