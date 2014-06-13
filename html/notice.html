@@ -1,0 +1,85 @@
+<div class="new_bg">
+	<div class="new_nei">
+        <h2>公告</h2>
+        <div class="new_neiz">
+            <ul>
+				{set:$page= (isset($_GET['page'])&&(intval($_GET['page'])>0))?intval($_GET['page']):1;}
+				{query:name=announcement order=id desc id=$announcement page=$page}
+                 <li>
+                	   <div class="new_neiliz"><a href="{url:/site/notice_detail/id/$item[id]}" title="{$item['title']}" target="_blank"><img height="123" width="183" src="/views/mall/skin/default/images/mall/announcement.jpg"></a></div>
+						<div class="new_neiliz0">
+                        <div class="new_neibt"><a href="{url:/site/notice_detail/id/$item[id]}" title="{$item['title']}" target="_blank"> {$item['title']}</a></div>
+                        <div class="new_neisj">{$item['time']}</div>
+                        <div class="new_neinr"><p>{echo:Article::get_word($item['content'],500)}</p></div>
+                    </div>
+                    <div class="clear"></div>
+					</li>
+				{/query}
+              </ul>
+			  
+			<div class="new_ym">
+				{$announcement->getPageBar()}    
+			</div>
+        </div>
+        <div class="new_neiy">
+            <b>推荐产品</b>
+            <ul>
+			{query:name=commend_goods as commend join=left join goods as go on go.id eq commend.goods_id
+				where  = commend_id eq 3 AND go.is_del eq 0 AND go.id is not null
+				fields = go.id,go.img,go.name,go.sell_price
+				limit  = 10
+			}
+				<li>
+                    <div class="p-info">
+                        <a class="p-img" href="{url:/site/products/id/$item[id]}">  <img height="200" width="200" alt="{$item['name']}" src="{webroot:}{echo:Thumb::get($item['img'],200,200)}"> </a>
+                        <a class="p-name" href="{url:/site/products/id/$item[id]}">{$item['name']}</a>
+                        <p class="p-price"><strong>￥{$item['sell_price']}</strong></p>
+                    </div>
+                </li>
+			{/query}	
+			</ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<style>
+.menu{ margin-bottom:0px !important;}
+.new_bg{background:#F2F2F2; width:100%; padding:15px 0px;}
+.new_nei{margin:0 auto; width:1000px; background:#fff;}
+.new_nei h2{background:#fbfbfb; height:35px; line-height:35px; border-bottom:1px solid #f5f4f4; font-family:微软雅黑; font-size:16px; font-weight:normal; padding-left:20px;}
+.new_neiz{float:left; width:745px; border-right:1px solid #f5f4f4;}
+.new_neiz ul{padding:15px;}
+.new_neiz li{padding:25px 15px; border-bottom:1px dashed #DDDDDD;}
+.new_neiliz{float:left; width:183px; height:123px; border:1px solid #f0f0f0;}
+.new_neiliz0{float:left; width:473px; padding-left:20px;}
+.new_neibt{font-family:微软雅黑; font-size:16px;}
+.new_neisj{color:#999999; padding-top:10px;}
+.new_neinr{color:#6C6C6C; padding-top:5px;}
+.new_neinr p{line-height:24px;}
+.new_ym{padding-bottom:30px; padding-left:30px;}
+.clear{clear:both;}
+.new_neiy{float:right; width:250px; margin:0 auto; padding-top:20px;}
+.new_neiy b{ font-size:16px; padding:20px 15px 0px; font-family:微软雅黑; color:#333;}
+.new_neiy_a{width:100px;}
+.new_neiy_a img{width:100px; height:75px;}
+.new_neiy ul{list-style:none; padding:0px 15px;}
+.new_neiy li{margin: 15px 0 0;}
+.new_banner{ margin-top:30px; border-top:1px solid #F5F4F4;}
+.new_banner img{width:217px; padding:15px 15px 0;}
+.footer{margin-top:0px !important;}
+.p-img {
+display: block;
+margin: auto;
+height: 200px;
+width: 200px;
+}
+.p-name {
+display:block;
+text-align: center;
+}
+.p-price {
+height: 20px;
+margin-top: 5px;
+text-align: center;
+}
+</style>
