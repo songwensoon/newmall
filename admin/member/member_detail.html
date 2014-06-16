@@ -1,0 +1,67 @@
+{js:kindeditor}
+{js:artTemplate}
+<script type='text/javascript' src='{theme:javascript/artTemplate/area_select.js}'></script>
+
+<div class="headbar">
+	<div class="position"><span>会员</span><span>></span><span>会员管理</span><span>></span><span>{if:isset($member['user_id'])}编辑会员{else:}添加会员{/if}</span></div>
+</div>
+<div class="content_box">
+	<div class="content form_content">
+		<form action="{url:/member/member_save/}" method="post" name="memberForm">
+			<input name="user_id" value="" type="hidden" />
+			<table class="form_table">
+				<col width="150px" />
+				<col />
+				<tbody>
+					<tr>
+						<th>用户名：</th>
+						<td></td>
+					</tr>
+					<tr>
+						<th>邮箱：</th>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<th>姓名：</th>
+						<td></td>
+					</tr>
+					<tr>
+						<th>姓别：</th>
+						<td>
+							<label><input name="sex" type="radio" value="1" checked="checked" />男</label>
+							<label><input name="sex" type="radio" value="2" />女</label>
+						</td>
+					</tr>
+					<tr>
+						<th>身份证号码：</th>
+						<td></td>
+					</tr>
+					<tr>
+						<th>电话：</th><td></td>
+					</tr>
+					
+					<tr>
+						<th>地址：</th><td></td>
+					</tr>
+					<tr>
+						<th>邮编：</th><td></td>
+					</tr>
+					<tr>
+						<th>QQ：</th><td></td>
+					</tr>
+					<tr>
+						<th>MSN：</th><td></td>
+					</tr>
+					<tr style="display:none;">
+						<th>经验值：</th><td></td>
+					</tr>
+					<tr style="display:none;">
+						<th>积分：</th><td></td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>
