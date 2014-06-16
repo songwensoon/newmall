@@ -35,3 +35,155 @@ CREATE TABLE `iwebshop_member` (
 
 INSERT INTO `iwebshop_member` VALUES ('2', 'aaaa', '0551-66704069', '', ',0,0,0,', 'sadasdas', '', '', '1', null, '0', '0', '0', null, '2014-06-16 15:14:59', '', '1', null, '0.00', null, '340121198611104055', '1', null);
 
+
+
+/*
+MySQL Data Transfer
+Source Host: localhost
+Source Database: iweb
+Target Host: localhost
+Target Database: iweb
+Date: 2014/6/16 16:44:57
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for iwebshop_right
+-- ----------------------------
+CREATE TABLE `iwebshop_right` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL COMMENT '权限名字',
+  `right` text COMMENT '权限码(控制器+动作)',
+  `is_show` int(11) DEFAULT '1',
+  `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除状态 1删除,0正常',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=125 DEFAULT CHARSET=utf8 COMMENT='权限资源码';
+
+-- ----------------------------
+-- Records 
+-- ----------------------------
+INSERT INTO `iwebshop_right` VALUES ('1', '[商品]商品列表', 'goods@goods_list,goods@goods_stats', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('2', '[商品]商品添加修改', 'goods@goods_img_upload,goods@goods_edit,goods@goods_update,goods@member_price,goods@model_init,goods@attribute_init,goods@search_spec,goods@select_spec', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('3', '[商品]商品CSV导入', 'goods@csvImport,goods@importCsvFile', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('4', '[商品]商品删除', 'goods@goods_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('5', '[商品]商品回收站', 'goods@goods_recycle_del,goods@goods_recycle_restore,goods@goods_recycle_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('6', '[商品]商品分类列表', 'goods@category_list,goods@category_sort', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('7', '[商品]商品分类添加修改', 'goods@category_edit,goods@category_save', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('8', '[商品]商品分类删除', 'goods@category_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('9', '[商品]品牌列表', 'brand@brand_list,goods@brand_sort', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('10', '[商品]品牌添加修改', 'brand@brand_save,brand@brand_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('11', '[商品]品牌删除', 'brand@brand_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('12', '[商品]品牌分类列表', 'brand@category_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('13', '[商品]品牌分类添加修改', 'brand@category_save,brand@category_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('14', '[商品]品牌分类删除', 'brand@category_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('15', '[商品]模型列表', 'goods@model_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('16', '[商品]模型添加修改', 'goods@search_spec,goods@model_update,goods@model_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('17', '[商品]模型删除', 'goods@model_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('18', '[商品]规格列表', 'goods@spec_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('19', '[商品]规格添加修改', 'goods@spec_edit,goods@spec_update', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('20', '[商品]规格删除', 'goods@spec_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('21', '[商品]规格图库', 'goods@spec_photo,goods@spec_photo_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('22', '[商品]规格回收站', 'goods@spec_recycle_list,goods@spec_recycle_restore,goods@spec_recycle_del,goods@spec_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('23', '[会员]会员列表', 'member@member_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('24', '[会员]会员添加修改', 'member@member_edit,member@member_save', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('25', '[会员]会员删除', 'member@member_reclaim', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('26', '[会员]会员回收站', 'member@member_del,member@member_restore,member@recycling', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('27', '[会员]会员预付款操作', 'member@member_recharge', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('28', '[会员]会员组列表', 'member@group_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('29', '[会员]会员组添加修改', 'member@group_edit,member@group_save', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('30', '[会员]会员组删除', 'member@group_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('31', '[会员]会员提现列表', 'member@withdraw_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('32', '[会员]会员提现删除', 'member@withdraw_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('33', '[会员]会员提现回收站', 'member@withdraw_update,member@withdraw_recycle', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('34', '[会员]会员提现状态修改', 'member@withdraw_status', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('35', '[会员]会员提现详情', 'member@withdraw_detail', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('36', '[会员]建议列表', 'comment@suggestion_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('37', '[会员]建议详情', 'comment@suggestion_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('38', '[会员]建议回复', 'comment@suggestion_edit_act', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('39', '[会员]建议删除', 'comment@suggestion_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('40', '[会员]咨询列表', 'comment@refer_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('41', '[会员]咨询详情', 'comment@refer_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('42', '[会员]咨询回复', 'comment@refer_reply', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('43', '[会员]咨询删除', 'comment@refer_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('44', '[会员]讨论列表', 'comment@discussion_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('45', '[会员]讨论详情', 'comment@discussion_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('46', '[会员]讨论删除', 'comment@discussion_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('47', '[会员]评价列表', 'comment@comment_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('48', '[会员]评价详情', 'comment@comment_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('49', '[会员]评价删除', 'comment@comment_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('50', '[会员]站内消息列表', 'comment@message_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('51', '[会员]站内消息发送', 'comment@message_send', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('52', '[会员]站内消息删除', 'comment@message_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('53', '[会员]到货通知列表', 'message@notify_list,message@notify_filter', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('54', '[会员]到货通知删除', 'message@notify_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('55', '[会员]到货通知发送Email', 'message@notify_send', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('56', '[会员]到货通知导出CSV', 'message@notify_export', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('57', '[会员]消息模板展示', 'message@tpl_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('58', '[会员]邮件订阅列表', 'message@registry_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('59', '[会员]邮件订阅发送', 'message@registry_message_send', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('60', '[会员]邮件订阅删除', 'message@registry_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('61', '[会员]邮件订阅导出CSV', 'message@registry_export', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('62', '[会员]消息模板修改', 'message@tpl_edit,message@tpl_save', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('63', '[订单]订单列表', 'order@order_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('64', '[订单]订单添加', 'order@order_note,order@order_update,order@order_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('65', '[订单]订单修改', 'order@gePay_fee,order@order_pri_num,order@order_pri_num_del,order@order_note,order@order_update,order@order_edit,order@order_message', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('66', '[订单]订单详情', 'order@order_show', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('67', '[订单]订单回收站', 'order@order_recycle_restore,order@order_recycle_del,order@order_recycle_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('68', '[订单]订单打印', 'order@merge_template,order@pick_template,order@shop_template,order@template,order@print_template_update,order@print_template', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('69', '[订单]订单删除', 'order@order_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('70', '[订单]订单状态修改', 'order@order_delivery_doc,order@order_collection_doc,order@order_complete,order@order_refundment,order@order_collection,order@order_deliver', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('71', '[订单]收款单列表', 'order@order_collection_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('72', '[订单]收款单详情', 'order@order_collection,order@collection_show', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('73', '[订单]收款单删除', 'order@collection_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('74', '[订单]收款单回收站', 'order@collection_recycle_restore,order@collection_recycle_del,order@collection_recycle_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('75', '[订单]退款单列表', 'order@order_refundment_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('76', '[订单]退款单删除', 'order@order_refundment_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('77', '[订单]退款单回收站', 'order@refundment_recycle_list,order@refundment_recycle_restore,order@refundment_recycle_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('78', '[订单]退款单详情', 'order@refundment_show,order@order_refundment', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('79', '[订单]配货单列表', 'order@order_delivery_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('80', '[订单]配货单删除', 'order@delivery_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('81', '[订单]配货单回收站', 'order@delivery_recycle_list,order@delivery_recycle_restore,order@delivery_recycle_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('82', '[订单]退款申请单列表', 'order@refundment_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('83', '[订单]退款申请单详情', 'order@refundment_doc_show', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('84', '[订单]退款申请单删除', 'order@refundment_doc_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('85', '[订单]退款申请单修改', 'order@refundment_doc_show_save', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('86', '[订单]快递单添加修改', 'order@expresswaybill_edit,order@expresswaybill_edit_act,order@expresswaybill_upload,order@expresswaybill_template', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('87', '[订单]快递单删除', 'order@expresswaybill_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('88', '[订单]订单退款操作', 'order@order_refundment_doc', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('89', '[订单]配货单详情', 'order@delivery_show', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('90', '[营销]促销规则列表', 'market@pro_rule_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('91', '[营销]促销规则添加修改', 'market@pro_rule_edit_act,market@pro_rule_edit,market@getTicketList', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('92', '[营销]促销规则删除', 'market@pro_rule_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('93', '[营销]限时抢购列表', 'market@pro_speed_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('94', '[营销]限时抢购删除', 'market@pro_speed_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('95', '[营销]限时抢购添加修改', 'market@pro_speed_edit,market@pro_speed_edit_act', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('96', '[营销]团购列表', 'market@regiment_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('97', '[营销]团购添加修改', 'market@regiment_edit_act,market@regiment_edit', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('98', '[营销]团购删除', 'market@regiment_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('99', '[营销]代金券列表', 'market@ticket_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('100', '[营销]代金券文件列表', 'market@ticket_excel_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('101', '[营销]代金券添加修改', 'market@ticket_edit_act,market@ticket_edit', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('102', '[营销]代金券文件详情', 'market@ticket_more_list', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('103', '[营销]代金券删除', 'market@ticket_more_del,market@ticket_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('104', '[营销]代金券文件删除', 'market@ticket_excel_del', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('105', '[营销]代金券批量生成', 'market@ticket_create', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('106', '[营销]代金券EXCEL导出', 'market@ticket_excel_pack,market@ticket_excel', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('107', '[营销]代金券文件打包下载', 'market@ticket_excel_pack', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('108', '[营销]代金券文件下载', 'market@ticket_excel_download', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('109', '[营销]代金券状态修改', 'market@ticket_status', '0', '0');
+INSERT INTO `iwebshop_right` VALUES ('110', '[统计]基础数据统计', 'market@init_count,market@spanding_avg,market@amount,market@user_reg', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('111', '[统计]资金操作记录', 'market@operation_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('112', '[统计]后台操作记录', 'market@account_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('113', '[统计]资金和后台操作记录删除', 'market@clear_log', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('114', '[系统]网站设置', 'system@test_sendmail,system@clearCache,system@conf_skin,system@save_conf,system@conf_base', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('115', '[系统]主题设置', 'system@applySkin,system@applyTheme,system@conf_skin', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('116', '[系统]支付管理', 'system@payment_update,system@payment_edit,system@payment_list', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('117', '[系统]配送管理', 'system@freight_recycle_del,system@freight_recycle_restore,system@freight_recycle,system@freight_del,system@freight_update,system@delivery_update,system@delivery_operate,system@delivery_edit,system@freight_edit,system@freight_list,system@delivery,system@delivery_recycle', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('118', '[系统]地域管理', 'system@area_list,system@area_update,system@area_del', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('119', '[工具]数据库备份', 'tools@db_act_bak,tools@db_bak,tools@upload_sql', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('120', '[工具]数据库还原', 'tools@download_pack,tools@localUpload,tools@res_act,tools@backup_del,tools@download,tools@db_res', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('121', '[工具]文章管理', 'tools@cat_del,tools@cat_edit,tools@cat_edit_act,tools@article_edit_act,tools@article_del,tools@article_list,tools@article_cat_list,tools@article_edit,tools@article_cat_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('122', '[工具]帮助管理', 'tools@help_cat_del,tools@help_cat_position,tools@help_cat_edit_act,tools@help_del,tools@help_edit_act,tools@help_list,tools@help_cat_list,tools@help_edit,tools@help_cat_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('123', '[工具]广告管理', 'tools@ad_edit_act,tools@ad_del,tools@ad_position_edit_act,tools@ad_position_del,tools@ad_position_list,tools@ad_list,tools@ad_position_edit,tools@ad_edit', '1', '0');
+INSERT INTO `iwebshop_right` VALUES ('124', '[工具]公告管理', 'tools@notice_del,tools@notice_edit_act,tools@notice_list,tools@notice_edit', '1', '0');
+
