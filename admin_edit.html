@@ -1,0 +1,260 @@
+<div class="headbar">
+	<div class="position"><span>系统</span><span>></span><span>权限管理</span><span>></span><span>管理员{if:isset($this->adminRow['id'])}编辑{else:}添加{/if}</span></div>
+</div>
+<div class="content_box">
+	<div class="content form_content">
+		<form action="{url:/system/admin_edit_act}"  method="post" name="admin_edit">
+			<input type='hidden' name='id' />
+			<table class="form_table">
+				<col width="150px" />
+				<col />
+				<tr>
+					<th>用户名：</th>
+					<td>
+						<input type='text' name='admin_name' class='normal' pattern='^\w{4,20}$' alt='请填写英文字母，数字或下划线，在4-20个字符之间' onblur="checkName();" />
+						<label id='unique'>* 管理员登录后台的用户名，请填写英文字母，数字或下划线，在4-20个字符之间</label>
+					</td>
+				</tr>
+				<tr>
+					<th>员工号：</th>
+					<td>
+						<input type='text' name='admin_no' class='normal' pattern='^\w{1,20}$' alt='请填写英文字母，数字或下划线，在1-20个字符之间' onblur="checkNo();" />
+						<label id='unique_no'>* 管理员后台的员工号，请填写英文字母，数字或下划线，在1-20个字符之间</label>
+					</td>
+				</tr>
+				{if:$this->adminRow['id']}
+				<tr name="reset_pwd">
+					<th>密码重设：</th>
+					<td><button type='button' class='btn' onclick="reset_pwd();"><span>重 设</span></button></td>
+				</tr>
+				{/if}
+
+				<tr name="pwd">
+					<th>密码：</th>
+					<td>
+						<input type='password' class='normal' name='password' pattern='^\w{6,32}$' alt='请填写英文字母，数字或下划线，在6-32个字符之间' />
+						<label>* 管理员登录后台的密码，请填写英文字母，数字或下划线，在6-32个字符之间</label>
+					</td>
+				</tr>
+
+				<tr name="pwd">
+					<th>重复密码：</th>
+					<td>
+						<input type='password' class='normal' name='repassword' pattern='^\w{6,32}$' alt='重复输入管理员登录后台的密码' bind='password' />
+						<label>* 重复输入管理员登录后台的密码</label>
+					</td>
+				</tr>
+
+				<tr>
+					<th>角色：</th>
+					<td>
+						{if:$this->adminRow['id'] == 1 && $this->adminRow['role_id'] == 0}
+						超级管理员
+						{else:}
+						<select id="role_select" class='normal' name='role_id' pattern='required' alt='请选择一个角色'>
+							<option value=''>请选择</option>
+							<option value='0'>超级管理员</option>
+							{query:name=admin_role}
+							<option value='{$item['id']}'>{$item['name']}</option>
+							{/query}
+						</select>
+						<label>*为管理员分配一个角色</label>
+						{/if}
+
+						<label class='attr'><button id="specAddButton" class="btn" type="button" onclick="window.location.href='{url:/system/role_edit}'"><span class="add">添加角色</span></button></label>
+					</td>
+				</tr>
+				<tr>
+					<th>Email:</th>
+					<td>
+						<input type='text' name='email' class='normal' pattern='email' empty alt='请填写正确的email格式' />
+						<label>联系此管理员的email邮箱地址</label>
+					</td>
+				</tr>
+				<tr id="staffs" style="display:none;">
+					<th>所属员工:</th>
+					<td>
+						<table>
+						<tbody id="staffs_mem" >
+							
+						</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr><td></td><td><button class="submit" type="submit"><span>保 存</span></button></td></tr>
+			</table>
+		</form>
+	</div>
+</div>
+
+<script type='text/javascript'>
+	
+	//ajax检查admin_name唯一性
+	function checkName()
+	{
+		var nameVal = $('[name="admin_name"]').val(); //获取登录名
+		var idVal   = $('[name="id"]').val();         //获取id
+
+		jQuery.post(
+			'{url:/system/check_admin}',{admin_name:nameVal,admin_id:idVal},function(content)
+			{
+				var content = $.trim(content);
+				if(content == -1)
+				{
+					$('[name="admin_name"]').removeClass('valid-text');
+					$('#unique').removeClass('valid-msg');
+
+					$('[name="admin_name"]').addClass('invalid-text');
+					$('#unique').addClass('invalid-msg');
+
+					$('#unique').html(nameVal+'用户名已经存在，请重新更换一个');
+				}
+			}
+		);
+	}
+	//ajax检查admin_no唯一性
+	function checkNo()
+	{
+		var noVal = $('[name="admin_no"]').val(); //获取员工号
+		var idVal   = $('[name="id"]').val();         //获取id
+
+		jQuery.post(
+			'{url:/system/check_admin_no}',{admin_no:noVal,admin_id:idVal},function(content)
+			{
+				var content = $.trim(content);
+				if(content == -1)
+				{
+					$('[name="admin_no"]').removeClass('valid-text');
+					$('#unique_no').removeClass('valid-msg');
+
+					$('[name="admin_no"]').addClass('invalid-text');
+					$('#unique_no').addClass('invalid-msg');
+
+					$('#unique_no').html(noVal+'员工号已经存在，请重新更换一个');
+				}
+			}
+		);
+	}
+
+	//展示密码重设
+	function reset_pwd()
+	{
+		$('[name="reset_pwd"]').hide();
+
+		$('[name="pwd"]').each(
+			function (i)
+			{
+				$('[name="pwd"]:eq('+i+') *').show();
+			}
+		);
+	}
+
+	//修改信息时自动隐藏
+	{if:$this->adminRow['id']}
+		$('[name="pwd"] *').hide();
+	{/if}
+
+	//表单回填
+	var formObj = new Form('admin_edit');
+	formObj.init
+	({
+		'id':'{$this->adminRow['id']}',
+		'admin_name':'{$this->adminRow['admin_name']}',
+		'admin_no':'{$this->adminRow['admin_no']}',
+		'role_id':'{$this->adminRow['role_id']}',
+		'email':'{$this->adminRow['email']}'
+	});
+	function role_change(obj)
+	{
+		alert(obj.val());
+	}
+	function getstaffs()
+	{
+		$('#staffs_mem').html("");
+		var roleVal = $('[name="role_id"]').val(); //获取登录名
+		var idVal   = $('[name="id"]').val();         //获取id
+		var tr_str = '';
+		jQuery.post(
+			'{url:/system/getstaffs}',{id:idVal,role_id:roleVal},function(data)
+			{
+				if(data&&data.result=='00000000'){
+					if(data.data_admin.length>0){
+						for(var i in data.data_admin){
+							if(i%8==0){
+								if(i!=0){
+									tr_str +="</tr>";
+								}
+								tr_str +="<tr>";
+							}
+							var check_str = '';
+							if(data.exists_staff.length>0){
+								if(jQuery.inArray(data.data_admin[i]['id'],data.exists_staff)>-1){
+									check_str = 'checked="checked"'; 
+								}
+							}
+							tr_str +="<td><input "+check_str+" type='checkbox' name='staff_id[]' value='"+data.data_admin[i]['id']+"' class='staff_id'/><label>"+data.data_admin[i]['admin_name']+"</label></td>";
+						}
+						tr_str +="</tr>";
+					}else{
+						tr_str +='<tr><td><label>暂无可分配的员工</label></td></tr>';
+					}
+					$('#staffs_mem').html(tr_str);
+				}
+			},'json'
+		);
+		
+	}
+
+	$(function(){
+		var roleVal = $('[name="role_id"]').val(); 
+		var id   = $('[name="id"]').val();     
+		if(roleVal==3||roleVal==4){
+			getstaffs();
+			$('#staffs').show();
+		}
+		$('#role_select').change(function(){
+			if(roleVal==$(this).val()){
+				return;
+			}
+			var tag = true;
+			$("input:checked").each(function(){
+				tag = false;
+				return false;
+			});
+			if(!tag&&id){
+				 $("#role_select option[value='"+roleVal+"']").attr("selected", true); 
+				 alert('该用户下有关联员工，请解除关联关系后再切换角色');
+				 return;
+			}
+			var role_id = $(this).val();
+			if(role_id==3||role_id==4){
+				getstaffs();
+				$('#staffs').show();
+			}else{
+				$('#staffs').hide();
+			}
+			roleVal = role_id;
+		});
+		$('.staff_id').live('click',function(){
+			if(id){
+				var admin_id = $(this).val();
+				$.ajax({    
+					url:'{url:/system/set_relations}',// 跳转到 action    
+					data:{    
+						 parent_id : id,    
+						 admin_id : admin_id,    
+					},    
+					type:'post',    
+					cache:false,    
+					dataType:'json',    
+					success:function(data) {    
+						 
+					},    
+					error : function() {    
+						  alert("异常！");    
+					}    
+				}); 
+			}
+		});
+	});
+</script>
